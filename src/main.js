@@ -364,7 +364,6 @@ function bindUIButtons() {
 
   // Üst panel
   document.getElementById('btn-menu')    ?.addEventListener('click', () => openScreen('menu'));
-  document.getElementById('btn-settings')?.addEventListener('click', () => openScreen('settings'));
 
   // Yeni Oyun düyməsi (topbar)
   document.getElementById('btn-new-game-top')?.addEventListener('click', () => {
