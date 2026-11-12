@@ -11,6 +11,8 @@ const screens = {
   settings:     document.getElementById('screen-settings'),
   about:        document.getElementById('screen-about'),
   hintConfirm:  document.getElementById('screen-hint-confirm'),
+  'abandon-confirm': document.getElementById('screen-abandon-confirm'),
+  rating:       document.getElementById('screen-rating'),
 };
 
 let _backStack = [];
