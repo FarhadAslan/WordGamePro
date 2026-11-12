@@ -1,0 +1,4 @@
+# Bloklanan sözlər siyahısı
+# Hər sətirdə bir söz (kiçik hərflə, Azərbaycan əlifbası)
+# Təhqiramiz, zərərli və ya sakitlik pozan sözlər
+# Bu faylı əl ilə redaktə edib "npm run build:dict" işlədin

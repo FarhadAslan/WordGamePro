@@ -1,0 +1,35 @@
+<!-- Bu faylı android/app/src/main/AndroidManifest.xml ilə birləşdirin -->
+<!-- npx cap sync sonrası əlavə dəyişikliklər -->
+
+<!--
+  Lazım olan icazələr (minimal):
+  - VIBRATE — haptics üçün
+  - POST_NOTIFICATIONS — bildiriş üçün (Android 13+)
+  - SCHEDULE_EXACT_ALARM — gündəlik bildiriş üçün
+  - INTERNET — NƏ LAZIM DEYİL (oflayn)
+
+  Qeyd: AndroidManifest.xml Capacitor tərəfindən avtomatik yaradılır.
+  Əl ilə dəyişiklik etmək üçün:
+  android/app/src/main/AndroidManifest.xml faylında <manifest> taqı daxilindəki
+  permission-ları yoxlayın.
+-->
+
+<!--
+  screenOrientation="portrait" — portret kilidi
+  android:configChanges="orientation|screenSize|keyboardHidden"
+
+  build.gradle (android/app/build.gradle) dəyişiklikləri:
+  - minSdk 24
+  - targetSdk 34 (Google Play tələbi)
+  - versionCode / versionName
+
+  Adaptive icon:
+  - android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+  - foreground: ic_launcher_foreground.xml (Azərbaycan motivli)
+  - background: #0d1117
+
+  Status bar:
+  SplashScreenPlugin Capacitor tərəfindən idarə edilir.
+  Əlavə status bar rəngi üçün:
+  android/app/src/main/res/values/styles.xml
+-->

@@ -1,0 +1,8 @@
+# İcazəli sözlər siyahısı
+# Lüğətdə olmayan amma oyuna əlavə etmək istədiyiniz 5 hərfli sözlər
+# Hər sətirdə bir söz (kiçik hərflə, Azərbaycan əlifbası)
+nəfəs
+şəhər
+könül
+vətən
+ulduz

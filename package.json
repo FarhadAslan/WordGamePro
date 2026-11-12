@@ -1,0 +1,17 @@
+{
+  "name": "soztap",
+  "version": "1.0.0",
+  "description": "Söz Tap — Azərbaycan dilində Wordle oyunu",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:dict": "node tools/build-dict.mjs",
+    "build:dict:merge": "node tools/build-dict.mjs && node tools/merge-dicts.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
