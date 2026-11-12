@@ -98,8 +98,25 @@ function onDictProgress(p) {
 async function resumeOrShowModeSelect() {
   const resumed = await gameState.resume();
   if (!resumed) {
-    openScreen('mode-select');
+    openModeSelect();
   }
+}
+
+// Mod seçim ekranında cari rejimi göy rəngdə göstər
+function updateModeSelectHighlight() {
+  document.getElementById('btn-mode-4')?.classList.remove('primary');
+  document.getElementById('btn-mode-5')?.classList.remove('primary');
+  document.getElementById('btn-mode-6')?.classList.remove('primary');
+
+  let btnId = 'btn-mode-5'; // default: DAILY və LEN5 → 5 hərf
+  if (gameState.mode === MODE.LEN4) btnId = 'btn-mode-4';
+  else if (gameState.mode === MODE.LEN6) btnId = 'btn-mode-6';
+  document.getElementById(btnId)?.classList.add('primary');
+}
+
+function openModeSelect() {
+  updateModeSelectHighlight();
+  openModeSelect();
 }
 
 // =============================================
@@ -369,7 +386,7 @@ function bindUIButtons() {
     // Oyun gedərkən bağla düyməsini göstər
     const closeBtn = document.getElementById('close-mode-select');
     if (closeBtn) closeBtn.removeAttribute('hidden');
-    openScreen('mode-select');
+    openModeSelect();
   });
 
   // Üst panel
@@ -379,7 +396,7 @@ function bindUIButtons() {
   document.getElementById('btn-new-game-top')?.addEventListener('click', () => {
     const closeBtn = document.getElementById('close-mode-select');
     if (closeBtn) closeBtn.removeAttribute('hidden');
-    openScreen('mode-select');
+    openModeSelect();
   });
 
   // Menyu
@@ -389,7 +406,7 @@ function bindUIButtons() {
     // Oyun gedərkən bağla düyməsini göstər
     const closeBtn = document.getElementById('close-mode-select');
     if (closeBtn) closeBtn.removeAttribute('hidden');
-    openScreen('mode-select');
+    openModeSelect();
   });
   document.getElementById('btn-stats-menu')  ?.addEventListener('click', () => { closeScreen('menu'); showStats(); });
   document.getElementById('btn-rules-menu')  ?.addEventListener('click', () => { closeScreen('menu'); openScreen('rules'); });
@@ -423,7 +440,7 @@ function bindUIButtons() {
   document.getElementById('btn-share')          ?.addEventListener('click', shareResult);
   document.getElementById('btn-new-game-result') ?.addEventListener('click', () => {
     closeScreen('result');
-    openScreen('mode-select');
+    openModeSelect();
   });
 
   // Statistika
