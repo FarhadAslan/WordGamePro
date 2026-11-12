@@ -13,7 +13,7 @@ import {
   loadRating, saveRating,
 } from '../storage/store.js';
 import { ECONOMY, calcWinCoins } from '../data/economy.js';
-import { calcRatingPoints, getTierForRP, applyRPDelta } from '../data/rating.js';
+import { calcRatingPoints, getTierForRP, applyRPDelta, RP_LOSS_ABANDON } from '../data/rating.js';
 import { getAnswers }             from './dict.js';
 
 export let WORD_LEN   = 5;
@@ -103,6 +103,66 @@ export class GameState {
 
     await this._startNew();
     this.emit(EV.STATE_LOADED, this._snapshot());
+  }
+
+  /**
+   * Saxlanmış yarımçıq oyunu bərpa et (bütün rejimlərdə).
+   * App başlayanda çağırılır. Bərpa olunsa true, yoxsa false.
+   */
+  async resume() {
+    this.stats  = await loadStats();
+    this.coins   = await loadCoins();
+    this.rating  = await loadRating();
+
+    const saved = await loadGameState();
+    if (!saved || saved.isOver) return false;
+
+    // DAILY rejimində tarix yoxla — köhnə günün sözü etibarsızdır
+    if (saved.mode === MODE.DAILY && saved.dateStr !== getBakuDateStr()) {
+      return false;
+    }
+
+    this.mode    = saved.mode;
+    this.wordLen = wordLenForMode(this.mode);
+    WORD_LEN     = this.wordLen;
+    await this._restore(saved);
+    this.emit(EV.STATE_LOADED, this._snapshot());
+    return true;
+  }
+
+  /**
+   * Cari oyunu yarımçıq saxlayıb yeni oyuna keçəndə RP cəzası tətbiq et.
+   * Oyun bitibsə və ya heç cəhd edilməyibsə cəza yoxdur.
+   * @returns {{penalty: number} | null}
+   */
+  async abandonGame() {
+    if (this.isOver || this.guesses.length === 0) return null;
+
+    const prevRP   = this.rating.rp;
+    const prevTier = getTierForRP(prevRP);
+    const penalty  = RP_LOSS_ABANDON;
+    const newRP    = applyRPDelta(prevRP, penalty);
+    const newTier  = getTierForRP(newRP);
+
+    this.rating.rp     = newRP;
+    this.rating.tierId = newTier.id;
+    this.rating.history = [
+      { delta: penalty, tierId: newTier.id, date: getBakuDateStr(), won: false, abandoned: true },
+      ...(this.rating.history ?? []),
+    ].slice(0, 20);
+
+    await saveRating(this.rating);
+    this.emit(EV.RATING_CHANGE, {
+      rp:         newRP,
+      delta:      penalty,
+      tierId:     newTier.id,
+      prevTierId: prevTier.id,
+      tierUp:     false,
+      tierDown:   newTier.minRP < prevTier.minRP,
+      tier:       newTier,
+    });
+
+    return { penalty };
   }
 
   async _startNew() {

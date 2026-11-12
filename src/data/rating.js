@@ -25,6 +25,7 @@ export const TIERS = [
  */
 const BASE_RP_BY_ATTEMPT = [50, 40, 30, 20, 12, 6]; // 1-ci...6-cı cəhd
 const RP_LOSS_DEFEAT     = -15;   // Məğlubiyyətdə itirilir
+export const RP_LOSS_ABANDON    = -10;   // Oyunu yarımçıq saxlayanda itirilir
 const RP_HINT_PENALTY    = 5;     // Hər ipucu üçün cəza (çıxılır)
 const RP_EXTRAGUESS_PENALTY = 8;  // Əlavə cəhd ipucu daha ağır cəza
 

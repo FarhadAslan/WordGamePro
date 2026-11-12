@@ -76,8 +76,8 @@ async function init() {
   setTimeout(() => {
     loadingEl.style.display = 'none';
     appEl.style.display = '';
-    // Hər girişdə mod seçim ekranını göstər
-    openScreen('mode-select');
+    // Yarımçıq oyun varsa bərpa et, yoxsa mod seçim ekranını göstər
+    resumeOrShowModeSelect();
   }, 350);
 
   // Görünürlük dəyişikliyi (arxa plandan qayıdış)
@@ -90,6 +90,16 @@ async function init() {
 function onDictProgress(p) {
   const bar = document.querySelector('.loading-bar-fill');
   if (bar) bar.style.width = `${Math.round(p * 100)}%`;
+}
+
+// =============================================
+// BƏRPA / MOD SEÇİMİ
+// =============================================
+async function resumeOrShowModeSelect() {
+  const resumed = await gameState.resume();
+  if (!resumed) {
+    openScreen('mode-select');
+  }
 }
 
 // =============================================
@@ -414,6 +424,17 @@ async function startMode(mode) {
   closeScreen('mode-select');
   closeScreen('menu');
   closeScreen('result');
+
+  // Günün sözü artıq davam edirsə — eyni oyuna qayıt, cəzasız
+  if (mode === MODE.DAILY && gameState.mode === MODE.DAILY && !gameState.isOver) {
+    return;
+  }
+
+  // Bitməmiş oyunu tərk edirsə — RP cəzası
+  const abandoned = await gameState.abandonGame();
+  if (abandoned) {
+    showToast(`Oyun yarımçıq saxlanıldı! ${abandoned.penalty} RP`);
+  }
   await gameState.init(mode, true);
 }
 // =============================================
