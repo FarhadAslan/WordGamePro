@@ -473,7 +473,7 @@ export class GameState {
     const day    = this.mode === MODE.DAILY ? `#${getDayNumber(this.dateStr)}` : '';
     const result = this.isWon ? `${this.guesses.length}/${this.maxGuesses}` : 'X/6';
     const grid   = buildShareGrid(this.results);
-    return `Söz Tap ${day} ${result}\n\n${grid}\n\nhttps://word-game-nine-alpha.vercel.app/`;
+    return `Söz Tap ${day} ${result}\n\n${grid}\n\nhttps://word-game-pro.vercel.app/`;
   }
 }
 
