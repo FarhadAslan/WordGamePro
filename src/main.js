@@ -402,6 +402,23 @@ function bindUIButtons() {
     document.getElementById('screen-rating')?.setAttribute('hidden', '');
   });
 
+  // Oyun tərk etmə təsdiq modalı
+  document.getElementById('abandon-confirm-yes')?.addEventListener('click', async () => {
+    closeScreen('abandon-confirm');
+    if (_pendingMode) {
+      const abandoned = await gameState.abandonGame();
+      if (abandoned) {
+        showToast(`Oyun yarımçıq saxlanıldı! ${abandoned.penalty} RP`);
+      }
+      await gameState.init(_pendingMode, true);
+      _pendingMode = null;
+    }
+  });
+  document.getElementById('abandon-confirm-no')?.addEventListener('click', () => {
+    closeScreen('abandon-confirm');
+    _pendingMode = null;
+  });
+
   // Nəticə ekranı
   document.getElementById('btn-share')          ?.addEventListener('click', shareResult);
   document.getElementById('btn-new-game-result') ?.addEventListener('click', () => {
@@ -420,6 +437,9 @@ function bindUIButtons() {
   document.addEventListener('touchstart', resumeAudio, { once: true });
 }
 
+// Bitməmiş oyunu tərk etmə təsdiqi üçün gözlədilən mod
+let _pendingMode = null;
+
 async function startMode(mode) {
   closeScreen('mode-select');
   closeScreen('menu');
@@ -430,11 +450,13 @@ async function startMode(mode) {
     return;
   }
 
-  // Bitməmiş oyunu tərk edirsə — RP cəzası
-  const abandoned = await gameState.abandonGame();
-  if (abandoned) {
-    showToast(`Oyun yarımçıq saxlanıldı! ${abandoned.penalty} RP`);
+  // Bitməmiş oyun varsa — təsdiq modalı göstər
+  if (!gameState.isOver && gameState.guesses.length > 0) {
+    _pendingMode = mode;
+    openScreen('abandon-confirm');
+    return;
   }
+
   await gameState.init(mode, true);
 }
 // =============================================
