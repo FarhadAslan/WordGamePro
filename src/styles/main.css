@@ -189,24 +189,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 0 8px;
   background: var(--topbar-bg);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  min-height: 48px;
+  height: 44px;        /* sabit, iki sətir yox */
+  min-height: 44px;
+  gap: 4px;
 }
 .topbar-title {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;   /* tək sətir: logo + mod yan-yana */
   align-items: center;
+  gap: 6px;
   flex: 1;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
 }
 .topbar-title-main {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 800;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--az-blue);
+  white-space: nowrap;
 }
 .topbar-mode {
   font-size: .65rem;
@@ -216,18 +223,22 @@ body {
 }
 /* Mod etiketi indi kliklenə bilən düymədir */
 .topbar-mode-btn {
-  font-size: .65rem;
+  font-size: .62rem;
   color: var(--az-blue);
   text-transform: uppercase;
-  letter-spacing: .06em;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 2px 7px;
+  letter-spacing: .05em;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 6px;
   cursor: pointer;
   font-family: var(--font);
   font-weight: 700;
   transition: background .15s, border-color .15s;
+  white-space: nowrap;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .topbar-mode-btn:hover,
 .topbar-mode-btn:focus-visible {
@@ -239,36 +250,41 @@ body {
 .topbar-btn {
   background: none;
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
   color: var(--text);
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 36px;
+  min-height: 36px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   transition: background .15s;
+  flex-shrink: 0;
 }
 .topbar-btn:hover { background: var(--bg-key); }
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
 /* Xal Göstəricisi */
 .coin-display {
   display: flex;
   align-items: center;
-  gap: 3px;
-  font-size: .9rem;
+  gap: 2px;
+  font-size: .82rem;
   font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 20px;
+  padding: 3px 6px;
+  border-radius: 16px;
   background: var(--bg-surface);
   border: 1px solid var(--border);
-  min-height: 32px;
+  height: 28px;
+  flex-shrink: 0;
 }
 .coin-icon {
   width: 1.1rem;
@@ -334,16 +350,16 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 0;
-  /* İpucu paneli topbar-a köçdüyünə görə lövhə daha çox yer ala bilər */
-  max-height: 60dvh;
+  max-height: 58dvh;
 }
 .board {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(6, 1fr);
   gap: clamp(3px, 1vw, 5px);
+  /* topbar: 44px, keyboard: ~175px, padding: ~16px → qalan ~dvh-235 */
   width: min(calc(100vw - 32px), 310px);
-  height: min(calc((100dvh - 160px) * 0.56), 370px);
+  height: min(calc(100dvh - 235px), 370px);
   aspect-ratio: 5/6;
 }
 
@@ -459,7 +475,7 @@ body {
 /* ---------- Joker haqqı paneli (topbar altında dropdown) ---------- */
 .joker-panel {
   position: absolute;
-  top: 48px; /* topbar hündürlüyü */
+  top: 44px; /* topbar hündürlüyü */
   right: 0;
   left: 0;
   z-index: 100;
@@ -565,8 +581,8 @@ body {
   flex: 1;
   min-width: 0;
   max-width: 44px;
-  /* Klavişlər daha hündür — barmaqla rahat basmaq üçün */
-  height: clamp(48px, 11.5vw, 62px);
+  /* Klaviş hündürlüyü dvh-a bağlanır — uzun ekranlarda daha böyük, qısada daha kompakt */
+  height: clamp(46px, 7dvh, 60px);
   display: flex;
   align-items: center;
   justify-content: center;
