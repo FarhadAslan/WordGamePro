@@ -1204,3 +1204,58 @@ hr {
 .rt-hist-delta { font-weight: 700; }
 .rt-hist-row.pos .rt-hist-delta { color: var(--color-correct); }
 .rt-hist-row.neg .rt-hist-delta { color: var(--az-red); }
+
+/* ============================================================
+   ABANDON TƏSDİQ MODALI — ekran ortasında, diqqətçəkən
+   ============================================================ */
+#screen-abandon-confirm {
+  align-items: center;
+  justify-content: center;
+}
+.abandon-card {
+  background: var(--bg-card);
+  border: 2px solid var(--az-red);
+  border-radius: 20px;
+  padding: 28px 24px;
+  width: calc(100% - 48px);
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 8px 40px var(--shadow), 0 0 30px rgba(239, 51, 64, .2);
+  animation: abandonPop .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes abandonPop {
+  from { transform: scale(.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.abandon-icon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 12px;
+  animation: abandonPulse 1.5s ease-in-out infinite;
+}
+@keyframes abandonPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+.abandon-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--az-red);
+  margin-bottom: 8px;
+  letter-spacing: .03em;
+}
+.abandon-text {
+  font-size: .9rem;
+  color: var(--text-sub);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.abandon-text strong {
+  color: var(--az-red);
+  font-size: 1rem;
+}
+#screen-abandon-confirm .action-btn.primary {
+  background: var(--az-red);
+  border-color: var(--az-red);
+  color: #fff;
+}
