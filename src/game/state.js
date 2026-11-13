@@ -440,6 +440,12 @@ export class GameState {
       return { ok: false, reason: 'noCoins' };
     if ((this.hints[type] ?? 0) >= cfg.maxPerGame)
       return { ok: false, reason: 'limitReached' };
+    // Ümumi joker limiti yoxlaması
+    const totalUsed = (this.hints.reveal ?? 0) + (this.hints.present ?? 0) +
+                      (this.hints.eliminate ?? 0) + (this.hints.meaning ?? 0) +
+                      (this.hints.extraguess ?? 0);
+    if (totalUsed >= ECONOMY.maxHintsPerGame)
+      return { ok: false, reason: 'totalLimitReached' };
     if (this.isOver || this.isRevealing)
       return { ok: false, reason: 'gameOver' };
 

@@ -121,8 +121,9 @@ function requestHint(type) {
 async function executeHint(type) {
   const res = await gameState.useHint(type);
   if (!res.ok) {
-    if (res.reason === 'noCoins')     showToast('Xal çatmır! 🪙');
-    if (res.reason === 'limitReached')showToast('Bu ipucunu artıq istifadə etdiniz');
+    if (res.reason === 'noCoins')          showToast('Xal çatmır! 🪙');
+    if (res.reason === 'limitReached')     showToast('Bu ipucunun limiti dolub');
+    if (res.reason === 'totalLimitReached')showToast(`Bu oyunda maksimum 2 joker istifadə edə bilərsiniz! 🃏`);
     return;
   }
 
@@ -155,7 +156,14 @@ async function executeHint(type) {
 }
 
 export function updateHintButtons() {
-  const { coins, hints, isOver, isRevealing, maxGuesses } = gameState;
+  const { coins, hints, isOver, isRevealing } = gameState;
+
+  // Ümumi istifadə sayı
+  const totalUsed = (hints.reveal ?? 0) + (hints.present ?? 0) +
+                    (hints.eliminate ?? 0) + (hints.meaning ?? 0) +
+                    (hints.extraguess ?? 0);
+  const totalMaxed = totalUsed >= ECONOMY.maxHintsPerGame;
+
   document.querySelectorAll('.hint-btn').forEach(btn => {
     const type = btn.dataset.hint;
     const cfg  = ECONOMY.hints[type];
@@ -163,11 +171,12 @@ export function updateHintButtons() {
 
     const noCoins  = coins < cfg.cost;
     const maxed    = (hints[type] ?? 0) >= cfg.maxPerGame;
-    const disabled = isOver || isRevealing || noCoins || maxed;
+    const disabled = isOver || isRevealing || noCoins || maxed || totalMaxed;
 
     btn.disabled = disabled;
-    btn.title    = maxed    ? 'Limit dolub'
-                 : noCoins  ? 'Xal çatmır'
+    btn.title    = totalMaxed ? `Bu oyun üçün ${ECONOMY.maxHintsPerGame} joker limiti dolub`
+                 : maxed      ? 'Bu ipucunun limiti dolub'
+                 : noCoins    ? 'Xal çatmır'
                  : '';
   });
 }

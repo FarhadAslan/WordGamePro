@@ -21,6 +21,7 @@ export const ECONOMY = {
     meaning:    { cost: 50, maxPerGame: 1 },   // 📖 Məna/İpucu
     extraguess: { cost: 80, maxPerGame: 1 },   // ➕ Əlavə cəhd
   },
+  maxHintsPerGame: 2,     // Bir oyunda istifadə edilə biləcək ümumi joker sayı
 
   // Reward reklam interfeysi (gələcək inteqrasiya üçün boş)
   // RewardProvider.show() → Promise<{ coins: number }>
