@@ -1,6 +1,6 @@
 {
-  "name": "Söz Tap",
-  "short_name": "Söz Tap",
+  "name": "Wordle Az",
+  "short_name": "Wordle Az",
   "description": "Azərbaycan dilində söz tapmaca oyunu",
   "start_url": "/",
   "display": "standalone",

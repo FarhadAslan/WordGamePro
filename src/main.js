@@ -1,5 +1,5 @@
 /**
- * Söz Tap — main.js
+ * Wordle Az — main.js
  * Tətbiqin giriş nöqtəsi. Bütün modulları birləşdirir.
  */
 import { loadDictionary }           from './game/dict.js';
@@ -522,7 +522,7 @@ async function shareResult() {
   const day     = gameState.mode === MODE.DAILY ? ` #${getDayNumber(gameState.dateStr)}` : '';
   const result  = gameState.isWon ? `${gameState.guesses.length}/${gameState.maxGuesses}` : 'X/6';
   const grid    = buildShareGrid(gameState.results, prefs?.contrast);
-  const text    = `Söz Tap${day} ${result}\n\n${grid}\n\nhttps://word-game-pro.vercel.app/`;
+  const text    = `Wordle Az${day} ${result}\n\n${grid}\n\nhttps://word-game-pro.vercel.app/`;
 
   // Web Share API və ya clipboard
   if (navigator.share) {

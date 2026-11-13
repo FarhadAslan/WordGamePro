@@ -1,7 +1,7 @@
 {
-  "name": "soztap",
+  "name": "wordle-az",
   "version": "1.0.0",
-  "description": "Söz Tap — Azərbaycan dilində Wordle oyunu",
+  "description": "Wordle Az — Azərbaycan dilində Wordle oyunu",
   "type": "module",
   "scripts": {
     "dev": "vite",

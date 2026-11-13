@@ -1,5 +1,5 @@
 /**
- * Reyting Sistemi — Söz Tap
+ * Reyting Sistemi — Wordle Az
  *
  * Tier sırası (aşağıdan yuxarı):
  *   Yeni → Tunc → Gümüş → Qızıl → Platin → Almaz → Əfsanə
